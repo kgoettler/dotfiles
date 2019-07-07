@@ -1,0 +1,121 @@
+-- vim: ts=4 sw=4 noet ai cindent syntax=lua
+--[[
+Author: Kun Yang
+Conky version 1.10.8
+04/06/2019
+Inspired in: + conckrc_tr,conyrc_tl,conkyrc_tm by Matias Pujado
+             + Conky docs
+]]
+
+conky.config = {
+-- ----------------------------Windows Settings
+	own_window = true,
+    own_window_class = 'Conky',
+    own_window_type = 'desktop',
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+--	own_window_colour = 'black',
+	own_window_argb_visual = true,
+	own_window_transparent = true,
+--	own_window_argb_value = 0,
+
+	background = false,
+	double_buffer = true,
+-- ---------------------------Position
+    alignment = 'top_right',
+
+    gap_x = 5,
+    gap_y = 20,
+
+	minimum_height = 5,
+	minimum_width = 275,
+-- ---------------------------Font
+	draw_borders = false,
+    draw_graph_borders = false,
+    draw_outline = false,
+    draw_shades = false,    
+
+--font = 'DejaVu Sans Mono:size=10',
+	--font = 'wqy:size=12',
+	--font = 'Fira Mono:size=10',
+
+	uppercase = false,
+	use_spacer = 'none',
+
+	text_buffer_size = 2048,
+	use_xft = true,
+	--font = 'Fira Mono:size=9',
+	--font = 'Noto Sans:size=10',
+	font = 'Fira Sans:size=10',
+	override_utf8_locale = true,
+-- -------------------------------Other
+	net_avg_samples = 2,	
+	no_buffers = true,
+	out_to_console = false,
+    out_to_stderr = false,
+    extra_newline = false,
+	
+	stippled_borders = 0,
+    update_interval = 1.0,
+
+	color0 = 'C0C5CE',-- white
+	color1 = 'C0C5CE',-- bar
+	color2 = 'FFFF00',-- stress
+	color3 = '9FD3E6',
+	color4 = 'A3BE8C',
+	color5 = 'D65E76',
+	color6 = 'EBCB8B'
+
+}
+
+--${image $HOME/.conky/popos.png -p 120,2 -s 80x56}
+
+--${offset 10}CPU1: ${alignc}${cpu cpu1}% ${alignr}${cpubar cpu1 8,60}
+--${offset 10}CPU2: ${alignc}${cpu cpu2}% ${alignr}${cpubar cpu2 8,60}
+--${offset 10}CPU3: ${alignc}${cpu cpu3}% ${alignr}${cpubar cpu3 8,60}
+--${offset 10}CPU4: ${alignc}${cpu cpu4}% ${alignr}${cpubar cpu4 8,60}
+--${offset 10}CPU5: ${alignc}${cpu cpu5}% ${alignr}${cpubar cpu4 8,60}
+--${offset 10}CPU6: ${alignc}${cpu cpu6}% ${alignr}${cpubar cpu4 8,60}
+--${offset 10}CPU7: ${alignc}${cpu cpu11}% ${alignr}${cpubar cpu4 8,60}
+
+--${offset 10}${cpubar cpu1 8,100} ${offset 10} ${cpubar cpu7 8,100} ${offset 10} ${exec sensors | grep 'Core 0' | cut -c17-24}
+--${offset 10}${cpubar cpu2 8,100} ${offset 10} ${cpubar cpu8 8,100} ${offset 10} ${exec sensors | grep 'Core 1' | cut -c17-24}
+--${offset 10}${cpubar cpu3 8,100} ${offset 10} ${cpubar cpu9 8,100} ${offset 10} ${exec sensors | grep 'Core 2' | cut -c17-24}
+--${offset 10}${cpubar cpu4 8,100} ${offset 10} ${cpubar cpu10 8,100} ${offset 10} ${exec sensors | grep 'Core 3' | cut -c17-24}
+--${offset 10}${cpubar cpu5 8,100} ${offset 10} ${cpubar cpu11 8,100} ${offset 10} ${exec sensors | grep 'Core 4' | cut -c17-24}
+--${offset 10}${cpubar cpu6 8,100} ${offset 10} ${cpubar cpu12 8,100} ${offset 10} ${exec sensors | grep 'Core 5' | cut -c17-24}
+conky.text = [[
+${voffset 30}${offset 10}${color4}System ${color4}${hr 2}${offset 10}
+$color0${offset 10}OS:${alignr}${color3}$nodename${offset 10}${color1}
+${offset 10}Kernel:${alignr}$kernel${offset 10}
+${offset 10}Uptime:${alignr}$uptime${offset 10}
+${offset 10}${color4}CPU ${color4}${hr 2}${offset 10}$color0$
+${offset 10}${cpubar cpu1 8,140} ${alignr}${freq_g 1}GHz    ${exec sensors | grep 'Core 0' | cut -c17-24}
+${offset 10}${voffset -5}${cpubar cpu7 8,140} ${alignr} 
+${offset 10}${cpubar cpu2 8,140} ${alignr}${freq_g 2}GHz    ${exec sensors | grep 'Core 1' | cut -c17-24}
+${offset 10}${voffset -5}${cpubar cpu8 8,140} ${alignr} 
+${offset 10}${cpubar cpu3 8,140} ${alignr}${freq_g 3}GHz    ${exec sensors | grep 'Core 2' | cut -c17-24}
+${offset 10}${voffset -5}${cpubar cpu9 8,140} ${alignr} 
+${offset 10}${cpubar cpu4 8,140} ${alignr}${freq_g 4}GHz    ${exec sensors | grep 'Core 3' | cut -c17-24}
+${offset 10}${voffset -5}${cpubar cpu10 8,140} ${alignr} 
+${offset 10}${cpubar cpu5 8,140} ${alignr}${freq_g 5}GHz    ${exec sensors | grep 'Core 4' | cut -c17-24}
+${offset 10}${voffset -5}${cpubar cpu11 8,140} ${alignr} 
+${offset 10}${cpubar cpu6 8,140} ${alignr}${freq_g 6}GHz    ${exec sensors | grep 'Core 5' | cut -c17-24}
+${offset 10}${voffset -5}${cpubar cpu12 8,140} ${alignr} 
+${offset 10}${alignr}${cpugraph cpu0 20,240 393F4C 9FD3E6 -l}
+${offset 10}${color4}RAM ${color4}${hr 2}${offset 10}${color1}
+${offset 10}Total: ${alignr}${memmax}
+${offset 10}Used: ${alignr}${mem} (${memperc}%)
+${offset 10}${color4}GPU ${color4}${hr 2}${offset 10}${color1}
+${offset 10}Temperature: ${alignr}${exec sensors | grep "amdgpu.*" -A 5 | grep "temp1" | cut -c16-22}
+${offset 10}Fan: ${alignr}${exec sensors | grep "amdgpu.*" -A 5 | grep "fan1" | cut -c15-22}
+${offset 10}${color4}Disk ${color4}${hr 2}${offset 10}${color1}
+${offset 10}Total: ${alignr}${fs_size /}
+${offset 10}Used: ${alignr}${fs_used /} (${fs_used_perc /}%)
+${offset 10}Free: ${alignr}${fs_free /} (${fs_free_perc /}%)
+${offset 10}${color4}Network ${color4}${hr 2}${offset 10}${color1}
+${offset 10}${color0}SSID: ${alignr}${wireless_essid}
+${offset 10}${color0}IP: ${alignr}${addrs wlo1}
+${offset 10}Up:  ${upspeed wlo1}/s${alignr}${upspeedgraph wlo1 20,120 393F4C 9FD3E6 -l}
+${offset 10}Down:  ${downspeed 1lo1}/s${alignr}${downspeedgraph wlo1 20,120 393F4C 9FD3E6 -l}
+]]

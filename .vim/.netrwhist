@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/kgoettler/localsite/themes/hello-friend-ng/assets/scss'
+let g:netrw_dirhist_2='/home/kgoettler/localsite/themes/hello-friend-ng/assets'
+let g:netrw_dirhist_3='/home/kgoettler/localsite/themes/hello-friend-ng'
+let g:netrw_dirhist_4='/home/kgoettler/localsite/themes/hello-friend-ng/static'
+let g:netrw_dirhist_5='/home/kgoettler/localsite/themes/hello-friend-ng/static/fonts'
+let g:netrw_dirhist_6='/home/kgoettler/localsite/themes/hello-friend-ng/layouts/partials'
+let g:netrw_dirhist_7='/home/kgoettler/src/r'
