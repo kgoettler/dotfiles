@@ -26,3 +26,9 @@ along with a bash script for deploying them on new builds.
 - polybar
 - rofi
 - tmux
+
+# Installation
+
+The `deploy.sh` script can be used to quickly make symlinks from the files in
+the repository and the locations on your system where each program will look
+for them.
