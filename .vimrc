@@ -15,7 +15,8 @@ call plug#end()
 
 " Colorscheme
 set termguicolors
-colorscheme sialoquent
+"colorscheme sialoquent
+colorscheme ursamajor2
 let g:lightline = {
       \ 'colorscheme': 'sialoquent',
       \ }

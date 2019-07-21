@@ -7,7 +7,7 @@ rofi.font:                           Fira Sans 10
 rofi.color-normal:                   argb:00000099, #C0C5CE, argb:00000099, argb:802E3440,#8ABBB9
 rofi.color-urgent:                   argb:00000000, #D75656, argb:00000000, #FFFFFF, #FFFFFF
 rofi.color-active:                   #000000, #6A8554, #000000, argb:4CFFFFFF, #FFF
-rofi.color-window:                   argb:FF2f343f, #FFF, #8ABBB9
+rofi.color-window:                   argb:C82e3440, #FFF, #8ABBB9
 rofi.fullscreen: 		     true
 
 rofi.bw:                             0
