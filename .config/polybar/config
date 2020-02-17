@@ -6,48 +6,42 @@ margin-bottom = 0
 
 [colors]
 
-fg = #D8DEE9
-modfg = #515765
-alt = #434C5E
-alt2 = #343B49
-bg = #002E3440
-
-
-white = #d1d1d1
-gray = #585858
-black = #ff121212
-red = #c795ae
-blue = #95aec7
-yellow = #c7ae95
-green = #aec795
+color00t = #002E3440
+color00 = #002E3440
+color01 = #343B49
+color02 = #434C5E
+color03 = #515765
+color04 = #9299A8
+color05 = #9CA7BB
+color06 = #B0B9CB
+color07 = #D8DEE9
+color08 = #9BCFE2
+color09 = #81A1C1
+color10 = #87B4B3
+color11 = #D3737C
+color12 = #E39880
+color13 = #E1C282
+color14 = #A6C18F
+color15 = #B892B1
 
 [bar/top]
 bottom = false
 monitor = HDMI-1
 fixed-center = true
-
-border-size = 0
-border-color = #ffaaaaaa
-
 width = 100%
 height = 30
-
 override-redirect = false
-;offset-x = 5%
-;offset-y = 1%
-radius = 5
 enable-ipc = false
 padding-left = 2
 padding-right = 2
+modules-left = stocks
 modules-center = date
 modules-right = volume menu0
-
 module-margin-right = 0
 module-margin-left = 0
-
 separator = "    "
-background = ${colors.bg}
-foreground = ${colors.modfg}
+background = ${colors.color00}
+foreground = ${colors.color03}
 font-0 = micro:weight=regular:size=9;3
 font-1 = FontAwesome:size=10;3
 font-2 = unifont:weight=regular:size=10;3
@@ -72,21 +66,17 @@ padding-left = 2
 padding-right = 2
 modules-left = i3
 modules-center = xwindow
-modules-right = cpu memory filesystem cputemp wlan
+modules-right = cpu memory filesystem cputemp gputemp wlan
 module-margin-right = 0
 module-margin-left = 0
-
 separator = "    "
-
-background = ${colors.bg}
-foreground = ${colors.modfg}
-
+background = ${colors.color00}
+foreground = ${colors.color03}
 font-0 = micro:weight=regular:size=9;3
 font-1 = FontAwesome:size=10;3
 font-2 = unifont:weight=regular:size=10;3
 font-3 = FontAwesome 5 Free:size=10:style=Solid;3
 font-4 = unifont:size=10;3
-
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Module: Window
@@ -94,18 +84,7 @@ font-4 = unifont:size=10;3
 [module/xwindow]
 type = internal/xwindow
 label = %title%
-label-maxlen = 30
-
-;;;;;;;;;;;;;;;;;;;;;;
-; Module: Disk
-;;;;;;;;;;;;;;;;;;;;;;
-[module/filesystem]
-type = internal/fs
-interval = 30
-mount-0 = /
-label-mounted =  %percentage_used%%
-label-mounted-padding = 1
-label-unmounted =
+;label-maxlen = 50
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Module: i3
@@ -116,16 +95,16 @@ format = <label-mode> <label-state>
 index-sort = true
 
 label-focused = %index%
-label-focused-padding = 1
-label-focused-foreground = ${colors.blue}
-label-focused-background = ${colors.bg}
+label-focused-padding = 2
+label-focused-foreground = ${colors.color09}
+label-focused-background = ${colors.color00}
 label-unfocused = %index%
-label-unfocused-padding = 1
+label-unfocused-padding = 2
 label-urgent = %index%
-label-urgent-background = ${colors.alt}
-label-urgent-padding = 1
+label-urgent-background = ${colors.color11}
+label-urgent-padding = 2
 label-visible = %index%
-label-visible-padding = 1
+label-visible-padding = 2
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Module: CPU
@@ -134,7 +113,10 @@ label-visible-padding = 1
 type = internal/cpu
 format = <label>
 format-label = internal/cpu
-label = " %percentage%%"
+label = "  %{F#515765}%percentage%%"
+label-foreground = ${colors.color09}
+label-background = ${colors.color00}
+label-padding = 2
 interval = 2
 
 ramp-coreload-0 = ▁
@@ -145,15 +127,43 @@ ramp-coreload-4 = ▅
 ramp-coreload-5 = ▆
 ramp-coreload-6 = ▇
 ramp-coreload-7 = █
-ramp-coreload-underline = ${colors.fg}
+ramp-coreload-underline = ${colors.color07}
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Module: RAM
 ;;;;;;;;;;;;;;;;;;;;;;
 [module/memory]
 type = internal/memory
-label = " %percentage_used%%"
+label = " %{F#515765}%percentage_used%%"
+label-foreground = ${colors.color14}
+label-background = ${colors.color00}
+label-padding = 2
 interval = 2
+
+;;;;;;;;;;;;;;;;;;;;;;
+; Module: Disk
+;;;;;;;;;;;;;;;;;;;;;;
+[module/filesystem]
+type = internal/fs
+interval = 30
+mount-0 = /
+label-mounted =  %{F#515765}%percentage_used%%
+label-mounted-foreground = ${colors.color13}
+label-mounted-background = ${colors.color00}
+label-mounted-padding = 2
+label-unmounted =
+
+;;;;;;;;;;;;;;;;;;;;;;
+; Module: CPU Temperature
+;;;;;;;;;;;;;;;;;;;;;;
+[module/cputemp]
+type = custom/script
+exec = sensors | grep --max-count=1 "Package id 0" | awk '{print substr($0,17,4)}'
+interval = 10
+label = " %{F#515765}%output%°C"
+label-foreground = ${colors.color12}
+label-background = ${colors.color00}
+label-padding = 2
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Module: Wireless 
@@ -165,14 +175,15 @@ interval = 3
 
 format-connected-padding = 0
 format-disconnected-padding = 0
-
 format-connected = <label-connected>
-format-connected-underline = ${colors.white}
-format-disconnected-underline = ${colors.gray}
-
-label-connected =  %local_ip%
+format-connected-underline = ${colors.color07}
+format-disconnected-underline = ${colors.color03}
+label-connected =  %{F#515765}%local_ip%
 label-disconnected = 
-label-disconnected-foreground = ${colors.gray}
+label-disconnected-foreground = ${colors.color13}
+label-connected-foreground = ${colors.color15}
+label-connected-background = ${colors.color00}
+label-connected-padding = 2
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Module: Ethernet
@@ -180,18 +191,15 @@ label-disconnected-foreground = ${colors.gray}
 [module/eth]
 type = internal/network
 interface = enp2s0
-interval = 3.0
+interval = 3
 
 format-connected-padding = 1
 format-disconnected-padding = 1
-
-format-connected-underline = ${colors.white}
-format-disconnected-underline = ${colors.gray}
-
+format-connected-underline = ${colors.color07}
+format-disconnected-underline = ${colors.color03}
 label-connected =  
 label-disconnected = 
-label-disconnected-foreground = ${colors.gray}
-
+label-disconnected-foreground = ${colors.color03}
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Module: Date
@@ -199,7 +207,7 @@ label-disconnected-foreground = ${colors.gray}
 [module/date]
 type = internal/date
 date = %a %b %d %Y %H:%M
-interval = 5
+interval = 60
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Module: Volume
@@ -211,24 +219,24 @@ format-volume = <bar-volume>
 label-volume = VOL
 label-volume-foreground = ${root.foreground}
 label-muted =  muted
-label-muted-foreground = ${colors.modfg}
+label-muted-foreground = ${colors.color03}
 
 bar-volume-width = 10
-bar-volume-foreground-0 = ${colors.green}
-bar-volume-foreground-1 = ${colors.green}
-bar-volume-foreground-2 = ${colors.green}
-bar-volume-foreground-3 = ${colors.green}
-bar-volume-foreground-4 = ${colors.yellow}
-bar-volume-foreground-5 = ${colors.red}
+bar-volume-foreground-0 = ${colors.color14}
+bar-volume-foreground-1 = ${colors.color14}
+bar-volume-foreground-2 = ${colors.color14}
+bar-volume-foreground-3 = ${colors.color14}
+bar-volume-foreground-4 = ${colors.color13}
+bar-volume-foreground-5 = ${colors.color11}
 bar-volume-gradient = false
 bar-volume-indicator = 
 bar-volume-indicator-font = 4
-bar-volume-indicator-foreground = ${colors.modfg}
+bar-volume-indicator-foreground = ${colors.color03}
 bar-volume-fill = 
 bar-volume-fill-font = 4
 bar-volume-empty = 
 bar-volume-empty-font = 4
-bar-volume-empty-foreground = ${colors.modfg}
+bar-volume-empty-foreground = ${colors.color03}
 
 
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -241,29 +249,25 @@ adapter = AC
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
-format-charging-underline = ${colors.green}
+format-charging-underline = ${colors.color14}
 format-charging-padding = 1
-
 format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${colors.yellow}
+format-discharging-underline = ${colors.color13}
 format-discharging-padding = 1
-
 format-full =   <label-full>
 format-full-underline = ${self.format-charging-underline}
 format-full-overline = ${self.format-charging-underline}
 format-full-padding = 1
-
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.white}
-
+ramp-capacity-foreground = ${colors.color07}
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
-animation-charging-foreground = ${colors.white}
+animation-charging-foreground = ${colors.color07}
 animation-charging-framerate = 500
 
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -273,6 +277,7 @@ animation-charging-framerate = 500
 type = internal/temperature
 warn-temperature = 65
 format = <label> 
+format-background = ${colors.color07}
 format-warn = <label-warn>
 label = TEMP %temperature%
 label-warn = TEMP %temperature%!!!
@@ -292,24 +297,41 @@ menu-0-1-exec = shutdown -r now
 menu-0-2 = "  "
 menu-0-2-exec = "i3-msg exit"
 menu-0-3 = "  "
-
 label-open = 
 label-close =
 
 ;;;;;;;;;;;;;;;;;;;;;;
-; Module: CPU Temperature
+; Module: Firefox
 ;;;;;;;;;;;;;;;;;;;;;;
-[module/cputemp]
+[module/quicklaunch]
+type = custom/text
+content = %{A1:firefox:}%{A}
+
+
+;;;;;;;;;;;;;;;;;;;;;;
+; Module: Stocks
+;;;;;;;;;;;;;;;;;;;;;;
+[module/stocks]
 type = custom/script
-exec = sensors | grep --max-count=1 "Package id 0" | awk '{print substr($0,17,4)}'
-interval = 10
-label = " %output%°C"
+exec = /home/kgoettler/.local/bin/ticker_kbg.sh ^DJI ^IXIC ^GSPC CL=F EURUSD=X GBPUSD=X CNY=X JPY=X
+tail = true
+
+;;;;;;;;;;;;;;;;;;;;;;
+; Module: News
+;;;;;;;;;;;;;;;;;;;;;;
+[module/news]
+type = custom/script
+exec = /home/kgoettler/src/dev/bash/news/googlenews.sh
+tail = true
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Module: GPU Temperature
 ;;;;;;;;;;;;;;;;;;;;;;
 [module/gputemp]
 type = custom/script
-exec = nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits
+exec = sensors -j | jq '."amdgpu-pci-0100"."edge"."temp1_input"'
 interval = 10
-label = "GPU %output%°C"
+label = " %{F#515765}%output%°C"
+label-foreground = ${colors.color12}
+label-background = ${colors.color00}
+label-padding = 2
