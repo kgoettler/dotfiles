@@ -39,9 +39,12 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/goyo.vim'
     Plug 'rakr/vim-two-firewatch'
     Plug 'cespare/vim-toml'
-    Plug 'Vimjas/vim-python-pep8-indent'
+    "Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'keith/swift.vim'
     Plug 'lervag/vimtex'
+    Plug 'pprovost/vim-ps1'
+    Plug 'kgoettler/bullets.vim', {'for': 'markdown'}
+    "Plug 'bfrg/vim-cpp-modern'
 call plug#end()
 
 " NERDTree config
@@ -96,6 +99,8 @@ au BufNewFile,BufRead *.vqs set filetype=javascript
 au BufNewFile,BufRead *settings*.txt set filetype=python
 au BufNewFile,BufRead *.jl set filetype=julia
 au BufNewFile,BufRead *.md setlocal textwidth=80
+au BufNewFile,BufRead *.rst setlocal textwidth=80
+
 "au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " JSON/JS setup
@@ -122,7 +127,10 @@ set splitbelow
 "let g:pyindent_open_parm = 4
 "let g:pyindent_nested_paren = 4
 "let g:pyindent_continue = 4
-"
+
+let g:python_host_prog  = '/usr/bin/python3'
+let g:python3_host_prog = '/usr/bin/python3'
+
 let g:tex_flavor="latex"
 
 augroup CursorLineOnlyInActiveWindow
