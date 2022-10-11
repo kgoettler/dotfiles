@@ -39,7 +39,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/goyo.vim'
     Plug 'rakr/vim-two-firewatch'
     Plug 'cespare/vim-toml'
-    "Plug 'Vimjas/vim-python-pep8-indent'
+    Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'keith/swift.vim'
     Plug 'lervag/vimtex'
     Plug 'pprovost/vim-ps1'
@@ -127,6 +127,7 @@ set splitbelow
 "let g:pyindent_open_parm = 4
 "let g:pyindent_nested_paren = 4
 "let g:pyindent_continue = 4
+let g:python_pep8_indent_hang_closing = 0
 
 let g:python_host_prog  = '/usr/bin/python3'
 let g:python3_host_prog = '/usr/bin/python3'

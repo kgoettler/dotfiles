@@ -1,0 +1,11 @@
+,.bash_profile
+,.vimrc
+,.inputrc
+tmux,.tmux.conf
+nvim,.config/nvim/init.vim
+rofi,.config/rofi/config
+neofetch,.config/neofetch/config.conf
+i3,.config/i3/config
+polybar,.config/polybar/config
+compton,.config/compton.conf
+conky,.conky/.conkyrc

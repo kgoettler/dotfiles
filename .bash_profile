@@ -11,7 +11,6 @@ time_start=$(expr `date +%s%N` / 1000)
 #+-----------------------------------------------+
 #"
 
-
 # Determine if this is Cygwin/WSL and, if so, determine the location of the C drive
 kernel_name=$(uname -s)
 if [[ "$kernel_name" == "CYGWIN"* ]]; then
@@ -25,6 +24,8 @@ else
 fi
 
 # Check for a .env file
+# This contains environment (i.e. machine) specific configuration
+# Useful for work-specific config, etc.
 if [ -f "${HOME}/.env" ]; then
     source "${HOME}/.env"
 fi
@@ -51,6 +52,12 @@ alias ls="ls -p --color=auto"
 alias ll="ls -la"
 alias grep="grep --color"
 alias vim="nvim"
+
+# Aliases for taskwarrior
+if command -v task &> /dev/null; then
+    alias in='task add +in'
+fi
+
 
 function colortest {
 #   This file echoes a bunch of color codes to the
@@ -89,6 +96,7 @@ function unix2win {
 function winpwd {
     out=$(pwd)
     out=${out/${C_DRIVE}/C:\/}
+    out=${out/\/home\/kgoettler\//Z:\/home\/kgoettler\/}
     echo "$out" | clip.exe
 }
     
@@ -112,7 +120,21 @@ function ssh-tunnel {
     ssh -f -N -L "$1":127.0.0.1:8080 -i ~/.ssh/kgoettler.pem ec2-user@"$2"
 }
 
+# ffile = "first file"
+# Quick wrapper to return the first result from an ls call
+# Useful when you want to do something with a single sample file
+# e.g. dcmdump $(ffile)
+function ffile {
+    ls -1 $@ | head -n 1
+}
+
+
 time_end=$(expr `date +%s%N` / 1000)
 startup_time=$(expr $time_end - $time_start)
 startup_time=$(expr $startup_time / 1000)
-echo "Startup time: $startup_time ms"
+msg="Startup time: $startup_time ms"
+if command -v cowsay &> /dev/null; then
+    cowsay "$msg"
+else
+    echo "$msg"
+fi
