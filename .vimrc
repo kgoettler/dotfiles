@@ -43,7 +43,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'keith/swift.vim'
     Plug 'lervag/vimtex'
     Plug 'pprovost/vim-ps1'
-    Plug 'kgoettler/bullets.vim', {'for': 'markdown'}
+    "Plug 'kgoettler/bullets.vim', {'for': 'markdown'}
+    Plug 'rust-lang/rust.vim'
+    Plug 'hashivim/vim-terraform'
     "Plug 'bfrg/vim-cpp-modern'
 call plug#end()
 
@@ -67,6 +69,7 @@ highlight FoldColumn ctermbg=NONE cterm=NONE guibg=NONE gui=NONE
 highlight EndOfBuffer ctermfg=black ctermbg=black guibg=NONE guifg=#282828
 highlight CursorLine guibg=NONE
 highlight CursorLineNr guibg=NONE
+highlight link SpecialComment Comment
 set fillchars+=vert:\ 
 if has('gui_running')
     highlight CursorLineNr guifg=#EBCB8B

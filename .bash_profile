@@ -1,6 +1,28 @@
 # Main
 time_start=$(expr `date +%s%N` / 1000)
 
+# Basic functions
+has() {
+    _cmd=$(command -v "$1") 2>/dev/null || return 1
+    [ -x "$_cmd" ] || return 1
+}
+
+get_duration() {
+    time_start="$1"
+    time_end="$2"
+    startup_time=$(expr $time_end - $time_start)
+    startup_time=$(expr $startup_time / 1000)
+    msg="Startup time: $startup_time ms"
+    echo "$msg"
+}
+
+if has fff; then
+    ff() {
+        fff "$@"
+        cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
+    }
+fi
+
 #echo "+-----------------------------------------------+
 #|     __                    __  __  __          |
 #|    / /______ _____  ___  / /_/ /_/ /__  _____ |
@@ -30,9 +52,12 @@ if [ -f "${HOME}/.env" ]; then
     source "${HOME}/.env"
 fi
 
-## If .bash_profile exists, bash doesn't read .profile
-if [ -f ~/.profile ]; then
-      . ~/.profile
+# grab bashrc (if necessary) if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+    fi
 fi
 
 if [ -f ~/.dircolors ]; then
@@ -56,6 +81,10 @@ alias vim="nvim"
 # Aliases for taskwarrior
 if command -v task &> /dev/null; then
     alias in='task add +in'
+fi
+
+if command -v exa &> /dev/null; then
+    alias ee='exa -lhHg'
 fi
 
 
@@ -117,7 +146,7 @@ function getlines {
 }
 
 function ssh-tunnel {
-    ssh -f -N -L "$1":127.0.0.1:8080 -i ~/.ssh/kgoettler.pem ec2-user@"$2"
+    ssh -f -N -L "$1":127.0.0.1:"$1" -i ~/.ssh/kgoettler.pem ec2-user@"$2"
 }
 
 # ffile = "first file"
@@ -128,6 +157,22 @@ function ffile {
     ls -1 $@ | head -n 1
 }
 
+function sumlist {
+    paste -s -d + - | bc
+}
+
+function nnote {
+    ts=$(date +%Y-%m-%d)
+    notefile="$HOME/notes/${ts}.md"
+    touch $notefile
+    vim $notefile
+}
+
+# Start Docker
+if service docker status 2>&1 | grep -q "is not running"; then
+    echo "Starting docker"
+    wsl.exe -d "${WSL_DISTRO_NAME}" -u root -e /usr/sbin/service docker start >/dev/null 2>&1
+fi
 
 time_end=$(expr `date +%s%N` / 1000)
 startup_time=$(expr $time_end - $time_start)
@@ -138,3 +183,5 @@ if command -v cowsay &> /dev/null; then
 else
     echo "$msg"
 fi
+
+eval "$(direnv hook bash)"
