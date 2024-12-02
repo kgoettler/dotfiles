@@ -1,0 +1,39 @@
+# Get editor completions based on the config schema
+#"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+[aws]
+disabled = true
+
+[conda]
+style = 'green'
+symbol = ''
+disabled = false
+
+[character]
+success_symbol = '[>](green)'
+error_symbol = '[✗](red)'
+
+[directory]
+style = 'blue'
+format = ' in [$path]($style)[$read_only]($read_only_style) '
+
+[hostname]
+ssh_only = false
+disabled = false
+style = 'yellow'
+format = '@[$hostname]($style)'
+
+[username]
+style_user = 'green'
+show_always = true
+format = '[$user]($style)'
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = false
+
+[python]
+detect_extensions = []
